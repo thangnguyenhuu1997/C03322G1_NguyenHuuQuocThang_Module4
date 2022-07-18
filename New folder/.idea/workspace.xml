@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4eb00fe6-02ac-496e-97fc-cafda6adec19" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/bai_tap/UngDungQuanLySanPham/src/main/java/com/codegym/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/bai_tap/UngDungQuanLySanPham/src/main/java/com/codegym/repository/IProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/bai_tap/UngDungQuanLySanPham/src/main/java/com/codegym/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/bai_tap/UngDungQuanLySanPham/src/main/webapp/WEB-INF/applicationContext.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/bai_tap/UngDungQuanLySanPham/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/bai_tap/UngDungQuanLySanPham/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/java/com/codegym/configuration/AppConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/java/com/codegym/configuration/AppInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/java/com/codegym/controller/CustomerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/java/com/codegym/model/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/java/com/codegym/service/CustomerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/java/com/codegym/service/ICustomerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/webapp/WEB-INF/views/create.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/webapp/WEB-INF/views/delete.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/webapp/WEB-INF/views/edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/webapp/WEB-INF/views/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/webapp/WEB-INF/views/layout.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ss3_views_thymeleaf/thuc_hanh/UngDungQuanLyDuLieuKhachHang/src/main/webapp/WEB-INF/views/view.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2C6h2HiVuofXDVOvq6eP16YJ2m8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4eb00fe6-02ac-496e-97fc-cafda6adec19" name="Default Changelist" comment="" />
+      <created>1658128732543</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1658128732543</updated>
+      <workItem from="1658128733784" duration="86000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="163" key="FileChooserDialogImpl" timestamp="1658128809081">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="549" y="163" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1658128809081" />
+    <state x="209" y="19" key="new project wizard" timestamp="1658128817090">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="209" y="19" key="new project wizard/0.0.1536.816@0.0.1536.816" timestamp="1658128817090" />
+  </component>
+</project>
