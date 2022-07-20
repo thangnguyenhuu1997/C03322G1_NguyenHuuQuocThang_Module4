@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/product/search}" method="POST" novalidate="novalidate">
+        <label>Search</label>
+        <input type="text" name="keyword">
+        <input type="submit" value="Search"/>
+    </form>
+</div>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Country</th>
+    </tr>
+    <tr th:each="row,rowStat : ${productList}">
+        <td th:text="${row.getId()}"></td>
+        <td th:text="${row.getName()}"></td>
+        <td th:text="${row.getPrice()}"></td>
+        <td th:text="${row.getCountry()}"></td>
+    </tr>
+</table>
+</body>
+</html>
