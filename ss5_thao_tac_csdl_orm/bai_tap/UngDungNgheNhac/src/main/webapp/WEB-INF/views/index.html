@@ -38,8 +38,8 @@
                 <td th:text="${music.getId()}"></td>
                 <td th:text="${music.getName()}"></td>
                 <td th:text="${music.getSinger()}"></td>
-                <td th:text="${music.getKindOfMusic()()}"></td>
-                <td th:text="${music.getLink()()}"></td>
+                <td th:text="${music.getKindOfMusic()}"></td>
+                <td th:text="${music.getLink()}"></td>
                 <td><a th:href="@{/edit/{id}(id=${music.getId()})}">edit</a></td>
                 <td><a th:href="@{/delete/{id}(id=${music.getId()})}">remove</a></td>
             </tr>
