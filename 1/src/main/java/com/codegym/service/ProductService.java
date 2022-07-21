@@ -9,24 +9,29 @@ import java.util.List;
 @Service
 public class ProductService implements IProductService {
     @Autowired
-    private IProductRepository productRepository;
+    IProductRepository iProductRepository;
     @Override
     public List<Product> selectAllProduct() {
-        return productRepository.selectAllProduct();
+        return iProductRepository.selectAllProduct();
     }
 
     @Override
     public Product selectProduct(int id) {
-        return productRepository.selectProduct(id);
+        return iProductRepository.selectProduct(id);
+    }
+
+    @Override
+    public void insertProduct(Product product) {
+        iProductRepository.insertProduct(product);
+    }
+
+    @Override
+    public void update(int id, Product product) {
+        iProductRepository.update(id,product);
     }
 
     @Override
     public void remove(int id) {
-        productRepository.remove(id);
-    }
-
-    @Override
-    public List<Product> searchProduct(String keyword) {
-        return productRepository.searchProduct(keyword);
+        iProductRepository.remove(id);
     }
 }

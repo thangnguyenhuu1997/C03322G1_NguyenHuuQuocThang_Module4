@@ -1,30 +1,54 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Song list</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
-<body>
-<div>
-    <form th:action="@{/product/search}" method="POST" novalidate="novalidate">
-        <label>Search</label>
-        <input type="text" name="keyword">
-        <input type="submit" value="Search"/>
-    </form>
+<div class="container">
+    <div class="row">
+        <h2 align="center">List of product</h2>
+    </div>
+    <div class="row">
+        <p>
+            <a th:href="@{/create}">
+                Add new product
+            </a>
+        </p>
+    </div>
 </div>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Country</th>
-    </tr>
-    <tr th:each="row,rowStat : ${productList}">
-        <td th:text="${row.getId()}"></td>
-        <td th:text="${row.getName()}"></td>
-        <td th:text="${row.getPrice()}"></td>
-        <td th:text="${row.getCountry()}"></td>
-    </tr>
-</table>
+
+
+<body>
+<div class="container">
+    <div class="row">
+        <table class="table table-bordered border-primary">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Country</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+            <tr th:each="product : ${productList}">
+                <td th:text="${product.getId()}"></td>
+                <td th:text="${product.getName()}"></td>
+                <td th:text="${product.getPrice()}"></td>
+                <td th:text="${product.getCountry()}"></td>
+                <td><a th:href="@{/edit/{id}(id=${product.getId()})}">edit</a></td>
+                <td><a th:href="@{/delete/{id}(id=${product.getId()})}">remove</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 </body>
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
 </html>
