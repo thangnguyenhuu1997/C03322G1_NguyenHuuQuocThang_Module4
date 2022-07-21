@@ -31,7 +31,7 @@ public class BlogController {
     @PostMapping("/create")
     public String create(@ModelAttribute("blog") Blog blog) {
         iBlogService.save(blog);
-        return "redirect:";
+        return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
@@ -43,12 +43,12 @@ public class BlogController {
     @PostMapping("/update")
     public String update(Blog blog) {
         iBlogService.update(blog);
-        return "redirect:";
+        return "redirect:/";
     }
-    
-    @GetMapping("delete")
-    public String delete(@RequestParam int id) {
+
+    @GetMapping("delete/{id}")
+    public String delete(@PathVariable("id") int id) {
         iBlogService.delete(id);
-        return "redirect:";
+        return "redirect:/";
     }
 }
