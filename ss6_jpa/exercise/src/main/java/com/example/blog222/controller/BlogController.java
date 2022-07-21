@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("blog")
+@RequestMapping("")
 public class BlogController {
     @Autowired
     private IBlogService iBlogService;
@@ -45,13 +45,7 @@ public class BlogController {
         iBlogService.update(blog);
         return "redirect:";
     }
-
-    @GetMapping("/view/{id}")
-    public String view(@PathVariable int id, Model model) {
-        model.addAttribute("blog", iBlogService.findByIdBlog(id));
-        return "view";
-    }
-
+    
     @GetMapping("delete")
     public String delete(@RequestParam int id) {
         iBlogService.delete(id);
