@@ -65,7 +65,7 @@ public class SongController {
     public String delete(@PathVariable Integer id, Model model) {
         model.addAttribute("song", iSongService.findById(id));
         iSongService.deleteSongById(id);
-        return "list";
+        return "redirect:/song";
     }
 
 }
