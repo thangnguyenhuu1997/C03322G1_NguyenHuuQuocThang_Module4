@@ -1,7 +1,9 @@
 package com.codegym.product.controller;
 
+import com.codegym.product.dto.ProductDto;
 import com.codegym.product.model.Product;
 import com.codegym.product.service.IProductService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,17 +37,18 @@ public class ProductController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new ProductDto());
         return "/create";
     }
 
     @PostMapping("/save")
-    public String save(@Valid @ModelAttribute Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute("product") @Valid ProductDto productDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "/create";
         } else {
+            Product product = new Product();
+            BeanUtils.copyProperties(productDto,product);
             iProductService.save(product);
-            redirectAttributes.addFlashAttribute("message", "Add new successful");
             return "redirect:/product";
         }
     }
