@@ -67,11 +67,6 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{id}/delete")
-    public String delete(@PathVariable int id, Model model) {
-        model.addAttribute("product", iProductService.findById(id));
-        return "/delete";
-    }
 
     @PostMapping("/delete")
     public String delete(Product product, RedirectAttributes redirect) {
