@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/bootstrap413/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/bootstrap413/css/style.css}"/>
+</head>
+<body>
+<h3>List Customers</h3>
+<!--<form th:action="@{/customers/search}" th:object="${product}" method="get" novalidate="novalidate">-->
+<!--    <input type="text" th:field="*{nameProduct}">-->
+<!--    <input type="submit" value="Search">-->
+<!--</form>-->
+<p>
+    <a th:href="@{/customer/create}">
+        Add new customer
+    </a>
+</p>
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+<table id="tableCustomer" class="table table-striped table-bordered col" style="width: 100%">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Tên khách hàng</th>
+        <th scope="col">Loại khách hàng</th>
+        <th scope="col">Ngày sinh</th>
+        <th scope="col">Giới tính</th>
+        <th scope="col">Số CMND</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Email</th>
+        <th scope="col">Địa chỉ</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row, rowStat : ${customerList}">
+        <td th:text="${row.customerId}"></td>
+        <td th:text="${row.customerName}"></td>
+        <td th:text="${row.customerType.customerTypeName}"></td>
+        <td th:text="${row.customerBirthday}"></td>
+        <td th:text="${row.customerGender}"></td>
+        <td th:text="${row.customerIdCard}"></td>
+        <td th:text="${row.customerPhone}"></td>
+        <td th:text="${row.customerEmail}"></td>
+        <td th:text="${row.customerAddress}"></td>
+        <td><a th:href="@{/customer/{id}/edit(id=${row.getCustomerId()})}">Edit</a></td>
+        <td>
+            <input id="del" th:attr="onclick=|showInfo('${row.customerId}','${row.customerName}')|"
+                   data-toggle="modal" data-target="#modal1" type="button"
+                   class="btn  btn-outline-danger" value="Delete">
+        </td>
+    </tr>
+    </tbody>
+</table>
+<span>
+    <a th:if="${customerList.hasPrevious()}" th:href="@{/customer(page = ${customerList.number - 1})}">Previous</a>
+</span>
+<span th:each="pageNo: ${#numbers.sequence(0,customerList.totalPages - 1)}">
+    <a th:href="@{/customer(page = ${pageNo})}" th:text="${pageNo + 1}"></a>
+</span>
+<span>
+    <a th:if="${customerList.hasNext()}" th:href="@{/customer(page = ${customerList.number +1})}">Next</a>
+</span>
+<div class="modal fade" id="modal1" data-backdrop="static" data-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="confirm"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" onclick="deleteById()">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/bootstrap/jquery/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/bootstrap/bootstrap413/js/bootstrap.bundle.min.js}"></script>
+<script>
+    var idDelete;
+
+    function showInfo(id, name) {
+        document.getElementById("confirm").innerHTML = "Chắc chắn xóa khách hàng có tên <br>" + name;
+        idDelete = id;
+    }
+
+    function deleteById() {
+        window.location.href = "/customer/delete/" + idDelete
+    }
+</script>
+</body>
+</html>

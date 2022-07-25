@@ -1,5 +1,7 @@
 package com.example.demo.model.customer;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,8 +11,12 @@ public class Customer {
     @Column(name = "customer_id")
     private int customerId;
 
-    @Column(name = "customer_type_id")
-    private int customerTypeId;
+    @ManyToOne
+    @JoinColumn(name = "customer_type_id", referencedColumnName = "customer_type_id")
+    private CustomerType customerType;
+
+    @Column(name = "customer_name")
+    private String customerName;
 
     @Column(name = "customer_birthday",columnDefinition = "date")
     private String customerBirthday;
@@ -30,18 +36,24 @@ public class Customer {
     @Column(name = "customer_address")
     private String customerAddress;
 
+    @Column(name = "status_delete")
+    @ColumnDefault("0")
+    private int statusDelete;
+
     public Customer() {
     }
 
-    public Customer(int customerId, int customerTypeId, String customerBirthday, int customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
+    public Customer(int customerId, CustomerType customerType, String customerName, String customerBirthday, int customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress, int statusDelete) {
         this.customerId = customerId;
-        this.customerTypeId = customerTypeId;
+        this.customerType = customerType;
+        this.customerName = customerName;
         this.customerBirthday = customerBirthday;
         this.customerGender = customerGender;
         this.customerIdCard = customerIdCard;
         this.customerPhone = customerPhone;
         this.customerEmail = customerEmail;
         this.customerAddress = customerAddress;
+        this.statusDelete = statusDelete;
     }
 
     public int getCustomerId() {
@@ -52,12 +64,20 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public int getCustomerTypeId() {
-        return customerTypeId;
+    public CustomerType getCustomerType() {
+        return customerType;
     }
 
-    public void setCustomerTypeId(int customerTypeId) {
-        this.customerTypeId = customerTypeId;
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getCustomerBirthday() {
@@ -106,5 +126,13 @@ public class Customer {
 
     public void setCustomerAddress(String customerAddress) {
         this.customerAddress = customerAddress;
+    }
+
+    public Integer getStatusDelete() {
+        return statusDelete;
+    }
+
+    public void setStatusDelete(Integer statusDelete) {
+        this.statusDelete = statusDelete;
     }
 }
