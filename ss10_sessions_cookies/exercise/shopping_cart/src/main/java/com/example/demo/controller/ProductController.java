@@ -1,40 +1,45 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CartDto;
+import com.example.demo.model.Cart;
+import com.example.demo.model.Product;
 import com.example.demo.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
-@SessionAttributes ("cart")
+
 @Controller
-@RequestMapping (value = "/shop")
+@SessionAttributes("cart")
 public class ProductController {
-    @ModelAttribute ("cart")
-    public CartDto initCart() {
-        return new CartDto();
-    }
     @Autowired
-    IProductService iProductService;
-    @GetMapping
-    public ModelAndView showListPage (Model model, @CookieValue (value = "idProduct",defaultValue = "-1") Long idProduct){
-        if (idProduct != -1){
-            model.addAttribute("historyProduct", iProductService.findById(idProduct).get());
-        }
-        return new  ModelAndView("product/list","productList",iProductService.findAll());
-    }
-    @GetMapping ("detail {id}")
-    public ModelAndView showDetail(@PathVariable long id, HttpServletResponse response){
-        Cookie cookie = new Cookie("idProduct",id+ "");
-        cookie.setMaxAge(1*24*60*60);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+    private IProductService productService;
 
-        return new ModelAndView("product/detail","product",iProductService.findById(id).get());
+    @ModelAttribute("cart")
+    public Cart setupCart() {
+        return new Cart();
+    }
+
+    @GetMapping("/shop")
+    public ModelAndView showShop() {
+        ModelAndView modelAndView = new ModelAndView("/shop");
+        modelAndView.addObject("products", productService.findAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/add/{id}")
+    public String addToCart(@PathVariable Long id, @ModelAttribute Cart cart, @RequestParam("action") String action) {
+        Optional<Product> productOptional = productService.findById(id);
+        if (!productOptional.isPresent()) {
+            return "/error.404";
+        }
+        if (action.equals("show")) {
+            cart.addProduct(productOptional.get());
+            return "redirect:/shopping-cart";
+        }
+        cart.addProduct(productOptional.get());
+        return "redirect:/shop";
     }
 }

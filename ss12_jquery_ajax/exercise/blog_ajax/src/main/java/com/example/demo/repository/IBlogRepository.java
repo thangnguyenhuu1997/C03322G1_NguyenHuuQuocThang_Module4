@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface IBlogRepository extends JpaRepository <Blog,Integer> {
+public interface IBlogRepository extends JpaRepository<Blog,Integer> {
     @Query(value = "select * from blog where status_delete = 1", nativeQuery = true)
     Page<Blog> findAllBlog(Pageable pageable);
 
