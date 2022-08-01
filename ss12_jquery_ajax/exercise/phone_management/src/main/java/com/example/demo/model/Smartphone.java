@@ -7,9 +7,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="smartphones")
 public class Smartphone {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String producer;
     private String model;
@@ -55,4 +54,11 @@ public class Smartphone {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return producer+": "+model+" with price "+price;
+    }
+
+
 }

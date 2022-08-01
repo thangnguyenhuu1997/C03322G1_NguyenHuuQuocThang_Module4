@@ -14,40 +14,51 @@ import java.util.Optional;
 @RequestMapping("/smartphones")
 public class SmartphoneController {
     @Autowired
-    private ISmartphoneService smartphoneService;
+    private ISmartphoneService iSmartphoneService;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Smartphone> createSmartphone(@RequestBody Smartphone smartphone) {
-        return new ResponseEntity<>(smartphoneService.save(smartphone), HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public ResponseEntity<Iterable<Smartphone>> allPhones() {
-        return new ResponseEntity<>(smartphoneService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(iSmartphoneService.save(smartphone), HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
     public ModelAndView getAllSmartphonePage() {
-        ModelAndView modelAndView = new ModelAndView("/phones/list");
-        modelAndView.addObject("smartphones", smartphoneService.findAll());
+        ModelAndView modelAndView = new ModelAndView("list");
+        modelAndView.addObject("smartphones", iSmartphoneService.findAll());
         return modelAndView;
+    }
+
+    @GetMapping
+    public ResponseEntity<Iterable<Smartphone>> allPhones() {
+        return new ResponseEntity<>(iSmartphoneService.findAll(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Smartphone> deleteSmartphone(@PathVariable Long id) {
-        Optional<Smartphone> smartphoneOptional = smartphoneService.findById(id);
+        Optional<Smartphone> smartphoneOptional = iSmartphoneService.findById(id);
         if (!smartphoneOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        smartphoneService.remove(id);
+        iSmartphoneService.remove(id);
         return new ResponseEntity<>(smartphoneOptional.get(), HttpStatus.NO_CONTENT);
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Smartphone> editSmartphone(@PathVariable Long id) {
-        Optional<Smartphone> smartphoneOptional = smartphoneService.findById(id);
+
+    @PatchMapping("/update")
+    ResponseEntity<Void> updatePath(@RequestBody Smartphone smartphone) {
+        iSmartphoneService.save(smartphone);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+
+    @GetMapping("/{id}")
+    ResponseEntity<Smartphone>phoneById(@PathVariable("id")Long id){
+        Optional<Smartphone> smartphoneOptional = iSmartphoneService.findById(id);
         if (!smartphoneOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(smartphoneOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(smartphoneOptional.get(),HttpStatus.OK);
+
     }
+
 }
