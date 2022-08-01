@@ -7,16 +7,21 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name="smartphones")
 public class Smartphone {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String producer;
-    @NotBlank
     private String model;
-    @NotNull
     private double price;
 
     public Smartphone() {
+    }
+
+    public Smartphone(String producer, String model, double price) {
+        this.producer = producer;
+        this.model = model;
+        this.price = price;
     }
 
     public Long getId() {
@@ -50,5 +55,4 @@ public class Smartphone {
     public void setPrice(double price) {
         this.price = price;
     }
-
 }
