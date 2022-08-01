@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product")
@@ -10,16 +11,20 @@ public class Product {
     private Long id;
     private String name;
     private double price;
+    @Column(columnDefinition = "LONGBLOB")
     private String description;
     private String image;
+
 
     public Product() {
     }
 
-    public Product(String name, double price, String description) {
+    public Product(Long id, String name, double price, String description, String image) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
+        this.image = image;
     }
 
     public Long getId() {
@@ -52,5 +57,26 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id.equals(product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
