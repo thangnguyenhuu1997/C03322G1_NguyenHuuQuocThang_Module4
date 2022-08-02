@@ -40,14 +40,12 @@
                     <a th:href="@{/shop/detail/{id}(id=${productObj.id})}">
                         <img th:src="@{${productObj.image}}" style="width: 240px;height: 240px"/>
 
-                        <!--                            <img th:src="@{../static/hoa1.jpg}" style="width: 240px;height: 240px"/>-->
                     </a>
                 </td>
                 <td th:text="${productObj.price}"></td>
                 <td th:text="${productObj.description}"></td>
                 <td>
-                    <!--                        <a class="btn btn-primary" th:href="@{/detail/{id}(id=${productObj.id})}"-->
-                    <!--                           role="button">Detail</a>-->
+
                     <a class="btn btn-primary" th:href="@{/shop/add_cart/{id}(id=${productObj.id})}" role="button">Add to
                         cart</a>
                 </td>
