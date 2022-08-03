@@ -30,7 +30,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     void update(@Param("type") Integer type, @Param("name") String name, @Param("birth") String birth, @Param("gender") Integer gender, @Param("idCard") String idCard, @Param("phone") String phone, @Param("email") String email, @Param("address") String address, @Param("id") Integer id);
 
     @Modifying
-    @Query(value = "update customer set status_delete = 0 where customer_id = :id", nativeQuery = true)
+    @Query(value = "update customer set status_delete = 1 where customer_id = :id", nativeQuery = true)
     void delete(@Param("id") Integer id);
 
     @Query(value = "select * from customer where customer_name = :name", nativeQuery = true,

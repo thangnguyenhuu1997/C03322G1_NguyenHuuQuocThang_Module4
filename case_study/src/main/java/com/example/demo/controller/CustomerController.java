@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Size;
-import org.springframework.data.domain.Pageable;
+
 
 @Controller
 @RequestMapping("/customer")
@@ -27,15 +25,6 @@ public class CustomerController {
 
     @Autowired
     private ICustomerTypeService iCustomerTypeService;
-
-//    @GetMapping("")
-//    public String showListCustomer(@RequestParam(name = "page", defaultValue = "0") @PageableDefault(size = 2) Pageable page, Model model) {
-//        Sort sort = Sort.by("customer_name").ascending();
-//        Page<Customer> customerList = iCustomerService.findAllCustomer(page);
-//        model.addAttribute("customerList", customerList);
-//        model.addAttribute("customer", new Customer());
-//        return "/customer/list";
-//    }
 
     @GetMapping("")
     public String home(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
@@ -89,6 +78,7 @@ public class CustomerController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+        System.out.println("id" + id);
         iCustomerService.delete(id);
         redirectAttributes.addFlashAttribute("message", "Delete successful");
         return "redirect:/customer";
