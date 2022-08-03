@@ -11,7 +11,7 @@
 <div class="container" style="margin-top: 5rem">
     <div class="row m-2">
         <center>
-            <h4>Service</h4>
+            <h4>Facility</h4>
             <a class="text-decoration-none" href="#" data-target="#createModal" data-toggle="modal">
                 Add new Facility
             </a>
@@ -22,7 +22,7 @@
         </center>
     </div>
     <div class="row">
-        <table class="table table-hover" id="serviceTable">
+        <table class="table table-hover" id="facilityTable">
             <thead class="text-white table-dark">
             <tr>
                 <th scope="col">#</th>
@@ -53,7 +53,7 @@
                 <td th:text="${row.facilityNumberOfFloors}"></td>
                 <td th:text="${row.rentType.rentTypeName}"></td>
                 <td th:text="${row.facilityType.facilityTypeName}"></td>
-                <td><a class="editService text-decoration-none" th:href="${row.facilityId}"
+                <td><a class="editFacility text-decoration-none" th:href="${row.facilityId}"
                        data-toggle="modal">Edit</a></td>
                 <td>
                     <a href="#" th:attr="onclick=|info('${row.facilityId}','${row.facilityName}')|"
@@ -108,8 +108,8 @@
                                    placeholder="House" value="" required>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="serviceArea">Facility Area</label>
-                            <input type="text" th:field="*{facilityArea}" class="form-control" id="serviceArea"
+                            <label for="facilityArea">Facility Area</label>
+                            <input type="text" th:field="*{facilityArea}" class="form-control" id="facilityArea"
                                    placeholder="50" required>
                         </div>
                     </div>
@@ -155,21 +155,10 @@
                             </select>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="facilityType">Service Type</label>
+                            <label for="facilityType">Facility Type</label>
                             <select th:field="*{facilityType}" class="form-control" id="facilityType">
                                 <option th:each="row: ${facilityTypeList}" th:value="${row.facilityTypeId}" th:text="${row.facilityTypeName}">
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                            <label class="form-check-label" for="invalidCheck">
-                                Agree to terms and conditions
-                            </label>
-                            <div class="invalid-feedback">
-                                You must agree before submitting.
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,7 +172,7 @@
 </form>
 
 <!--Modal edit-->
-<form th:action="@{/facility/save}" th:object="${facility}" method="POST" class="needs-validation p-4" id="formEdit">
+<form th:action="@{/facility/edit}" th:object="${facility}" method="POST" class="needs-validation p-4" id="formEdit">
     <div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -213,8 +202,8 @@
                                    placeholder="50" required>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="editServiceMaxPeople">Service Max People</label>
-                            <input type="text" th:field="*{facilityMaxPeople}" class="form-control" id="editServiceMaxPeople"
+                            <label for="editFacilityMaxPeople">Facility Max People</label>
+                            <input type="text" th:field="*{facilityMaxPeople}" class="form-control" id="editFacilityMaxPeople"
                                    placeholder="2" required>
                         </div>
                         <div class="col-md-4 mb-3">
@@ -264,8 +253,8 @@
     </div>
 </form>
 
-<!--Modal-->
-<form th:action="@{/service/delete}" method="get">
+<!--Modal delete-->
+<form th:action="@{/facility/delete}" method="get">
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
