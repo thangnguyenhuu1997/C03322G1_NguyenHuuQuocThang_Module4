@@ -4,52 +4,44 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name = "education_degree")
 public class EducationDegree {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "education_degree_id")
-    private Integer educationDegreeId;
+    private Integer eduDegreeId;
 
     @Column(name = "education_degree_name")
-    private String educationDegreeName;
+    private String eduDegreeName;
 
-    @OneToMany(mappedBy = "educationDegree")
-    @JsonBackReference(value = "back_degree")
-    private List<Employee> employeeList;
+    @OneToMany(mappedBy = "educationDegree", cascade = CascadeType.ALL)
+    private Set<Employee> employees;
 
-    public EducationDegree() {
+
+    public Integer getEduDegreeId() {
+        return eduDegreeId;
     }
 
-    public EducationDegree(Integer educationDegreeId, String educationDegreeName, List<Employee> employeeList) {
-        this.educationDegreeId = educationDegreeId;
-        this.educationDegreeName = educationDegreeName;
-        this.employeeList = employeeList;
+    public void setEduDegreeId(Integer eduDegreeId) {
+        this.eduDegreeId = eduDegreeId;
     }
 
-    public Integer getEducationDegreeId() {
-        return educationDegreeId;
+    public String getEduDegreeName() {
+        return eduDegreeName;
     }
 
-    public void setEducationDegreeId(Integer educationDegreeId) {
-        this.educationDegreeId = educationDegreeId;
+    public void setEduDegreeName(String eduDegreeName) {
+        this.eduDegreeName = eduDegreeName;
     }
 
-    public String getEducationDegreeName() {
-        return educationDegreeName;
+    public Set<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEducationDegreeName(String educationDegreeName) {
-        this.educationDegreeName = educationDegreeName;
-    }
-
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }

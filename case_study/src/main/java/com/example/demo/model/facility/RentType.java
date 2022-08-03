@@ -1,25 +1,20 @@
-package com.example.demo.model.Facility;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package com.example.demo.model.facility;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity(name = "rent_type")
 public class RentType {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "rent_type_id")
     private Integer rentTypeId;
 
+    @Column (name = "rent_type_name")
     private String rentTypeName;
 
-    @OneToMany(mappedBy = "rentType")
-    @JsonBackReference(value = "back_rent_type")
-    private List<Facility> facilityList;
-
-    public RentType() {
-    }
+    @OneToMany(mappedBy = "rentType", cascade = CascadeType.ALL)
+    private Set<Facility> facility;
 
     public Integer getRentTypeId() {
         return rentTypeId;
@@ -37,11 +32,11 @@ public class RentType {
         this.rentTypeName = rentTypeName;
     }
 
-    public List<Facility> getFacilityList() {
-        return facilityList;
+    public Set<Facility> getFacility() {
+        return facility;
     }
 
-    public void setFacilityList(List<Facility> facilityList) {
-        this.facilityList = facilityList;
+    public void setFacility(Set<Facility> facility) {
+        this.facility = facility;
     }
 }

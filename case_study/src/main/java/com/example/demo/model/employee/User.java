@@ -1,29 +1,24 @@
 package com.example.demo.model.employee;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "user")
 public class User {
-
     @Id
-    @Column(name = "username")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
+    //    @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference(value = "back_user")
-    private List<Employee> employee;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Employee> employees;
 
-    public User() {
-    }
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private Set<UserRole> userRoles;
 
     public String getUsername() {
         return username;
@@ -41,11 +36,19 @@ public class User {
         this.password = password;
     }
 
-    public List<Employee> getEmployee() {
-        return employee;
+    public Set<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEmployee(List<Employee> employee) {
-        this.employee = employee;
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
+
+//    public Set<UserRole> getUserRoles() {
+//        return userRoles;
+//    }
+//
+//    public void setUserRoles(Set<UserRole> userRoles) {
+//        this.userRoles = userRoles;
+//    }
 }

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap413/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap/bootstrap413/css/style.css}">
+</head>
+<body id="page-top">
+<div class="container" style="margin-top: 5rem">
+    <div class="row m-2">
+        <center>
+            <h4>Service</h4>
+            <a class="text-decoration-none" href="#" data-target="#createModal" data-toggle="modal">
+                Add new Facility
+            </a>
+            <br>
+            <i th:if="${msg != null}" class="bi bi-check2-circle">
+                <span class="" th:text="${msg}"></span>
+            </i>
+        </center>
+    </div>
+    <div class="row">
+        <table class="table table-hover" id="serviceTable">
+            <thead class="text-white table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Area</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Max people</th>
+                <th scope="col">Room standard</th>
+                <th scope="col">Other convenience</th>
+                <th scope="col">Pool area</th>
+                <th scope="col">Floors</th>
+                <th scope="col">Rent type</th>
+                <th scope="col">Facility type</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row,rowStat : ${facilityList}">
+                <td scope="row" th:text="${rowStat.count}"></td>
+                <td th:text="${row.facilityName}"></td>
+                <td th:text="${row.facilityArea}"></td>
+                <td th:text="${row.facilityArea}"></td>
+                <td th:text="${row.facilityCost}"></td>
+                <td th:text="${row.facilityMaxPeople}"></td>
+                <td th:text="${row.descriptionOtherConvenience}"></td>
+                <td th:text="${row.facilityPoolArea}"></td>
+                <td th:text="${row.facilityNumberOfFloors}"></td>
+                <td th:text="${row.rentType.rentTypeName}"></td>
+                <td th:text="${row.facilityType.facilityTypeName}"></td>
+                <td><a class="editService text-decoration-none" th:href="${row.facilityId}"
+                       data-toggle="modal">Edit</a></td>
+                <td>
+                    <a href="#" th:attr="onclick=|info('${row.facilityId}','${row.facilityName}')|"
+                       class="text-decoration-none" data-toggle="modal"
+                       data-target="#deleteModal">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <nav>
+            <ul class="pagination pagination-sm justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" th:if="${facilityList.hasPrevious()}"
+                       th:href="@{/facility/(page = ${facilityList.number - 1})}">Previous</a>
+                </li>
+                <div th:each="pageNo: ${#numbers.sequence(0,facilityList.totalPages - 1)}">
+                    <li class="page-item" th:if="${facilityList.number != pageNo}">
+                        <a class="page-link" th:href="@{/facility/(page = ${pageNo})}" th:text="${pageNo + 1}"></a>
+                    </li>
+                    <li class="page-item active" th:if="${facilityList.number == pageNo}">
+                        <a class="page-link" th:href="@{/facility/(page = ${pageNo})}" th:text="${pageNo + 1}"> </a>
+                    </li>
+                </div>
+                <li class="page-item">
+                    <a class="page-link" th:if="${facilityList.hasNext()}"
+                       th:href="@{/facility/(page = ${facilityList.number + 1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!--Modal create-->
+<form th:action="@{/facility/save}" th:object="${facility}" method="POST" class="needs-validation p-4">
+    <div class="modal fade bd-example-modal-lg" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalTitle">Create new facility</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="facilityName">Facility Name</label>
+                            <input type="text" th:field="*{facilityName}" class="form-control" id="facilityName"
+                                   placeholder="House" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="serviceArea">Facility Area</label>
+                            <input type="text" th:field="*{facilityArea}" class="form-control" id="serviceArea"
+                                   placeholder="50" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="facilityCost">Facility Cost</label>
+                            <input type="text" th:field="*{facilityCost}" class="form-control" id="facilityCost"
+                                   placeholder="50" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="facilityMaxPeople">Facility Max People</label>
+                            <input type="text" th:field="*{facilityMaxPeople}" class="form-control" id="facilityMaxPeople"
+                                   placeholder="2" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="facilityStandardRoom">Facility Standard Room</label>
+                            <input type="text" th:field="*{facilityStandardRoom}" class="form-control" id="facilityStandardRoom"
+                                   placeholder="Normal">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="otherConvenience">Other Convenience</label>
+                            <input type="text" th:field="*{descriptionOtherConvenience}" class="form-control" id="otherConvenience"
+                                   placeholder="Free breakfast">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="facilityPoolArea">Facility Pool Area</label>
+                            <input type="text" th:field="*{facilityPoolArea}" class="form-control" id="facilityPoolArea"
+                                   placeholder="30">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="numberOfFloors">Number Of Floors</label>
+                            <input type="text" th:field="*{facilityNumberOfFloors}" class="form-control" id="numberOfFloors"
+                                   placeholder="3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="rentType">Rent Type</label>
+                            <select th:field="*{rentType}" class="form-control" id="rentType">
+                                <option th:each="row: ${rentTypeList}" th:value="${row.rentTypeId}" th:text="${row.rentTypeName}">
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="facilityType">Service Type</label>
+                            <select th:field="*{facilityType}" class="form-control" id="facilityType">
+                                <option th:each="row: ${facilityTypeList}" th:value="${row.facilityTypeId}" th:text="${row.facilityTypeName}">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                            <label class="form-check-label" for="invalidCheck">
+                                Agree to terms and conditions
+                            </label>
+                            <div class="invalid-feedback">
+                                You must agree before submitting.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="createFacility()" class="btn btn-dark">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--Modal edit-->
+<form th:action="@{/facility/save}" th:object="${facility}" method="POST" class="needs-validation p-4" id="formEdit">
+    <div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalTitle">Edit facility</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        <div class="col-md-4 mb-3">
+                            <label for="editFacilityName">Facilily Name</label>
+                            <input type="text" th:field="*{facilityName}" class="form-control" id="editFacilityName"
+                                   placeholder="House" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="editFacilityArea">Facility Area</label>
+                            <input type="text" th:field="*{facilityArea}" class="form-control" id="editFacilityArea"
+                                   placeholder="50" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="editFacilityCost">Facility Cost</label>
+                            <input type="text" th:field="*{facilityCost}" class="form-control" id="editFacilityCost"
+                                   placeholder="50" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="editServiceMaxPeople">Service Max People</label>
+                            <input type="text" th:field="*{facilityMaxPeople}" class="form-control" id="editServiceMaxPeople"
+                                   placeholder="2" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="editFacilityStandardRoom">Facility Standard Room</label>
+                            <input type="text" th:field="*{facilityStandardRoom}" class="form-control" id="editFacilityStandardRoom"
+                                   placeholder="Normal">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="editOtherConvenience">Other Convenience</label>
+                            <input type="text" th:field="*{descriptionOtherConvenience}" class="form-control" id="editOtherConvenience"
+                                   placeholder="Free breakfast">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="editFacilityPoolArea">Facility Pool Area</label>
+                            <input type="text" th:field="*{facilityPoolArea}" class="form-control" id="editFacilityPoolArea"
+                                   placeholder="30">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="editFacilityNumberOfFloors">Number Of Floors</label>
+                            <input type="text" th:field="*{facilityNumberOfFloors}" class="form-control" id="editFacilityNumberOfFloors"
+                                   placeholder="3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="editRentType">Rent Type</label>
+                            <select th:field="*{rentType}" class="form-control" id="editRentType">
+                                <option th:each="row: ${rentTypeList}" th:value="${row.rentTypeId}" th:text="${row.rentTypeName}">
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="editFacilityType">Facility Type</label>
+                            <select th:field="*{facilityType}" class="form-control" id="editFacilityType">
+                                <option th:each="row: ${facilityTypeList}" th:value="${row.facilityTypeId}" th:text="${row.facilityTypeName}">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal" id="save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!--Modal-->
+<form th:action="@{/service/delete}" method="get">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input th:type="hidden" id="id" name="facilityId">
+                    Are you sure to delete <span id="name"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-dark">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</body>
+</html>

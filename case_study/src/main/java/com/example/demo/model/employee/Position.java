@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
-@Entity
+@Entity(name = "position")
 public class Position {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "position_id")
@@ -16,18 +16,8 @@ public class Position {
     @Column(name = "position_name")
     private String positionName;
 
-    @OneToMany(mappedBy = "position")
-    @JsonBackReference(value = "back_position")
-    private List<Employee> employeeList;
-
-    public Position() {
-    }
-
-    public Position(Integer positionId, String positionName, List<Employee> employeeList) {
-        this.positionId = positionId;
-        this.positionName = positionName;
-        this.employeeList = employeeList;
-    }
+    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
+    private Set<Employee> employees;
 
     public Integer getPositionId() {
         return positionId;
@@ -45,11 +35,11 @@ public class Position {
         this.positionName = positionName;
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
+    public Set<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }

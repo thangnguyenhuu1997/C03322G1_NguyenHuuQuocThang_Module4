@@ -1,33 +1,21 @@
 package com.example.demo.model.employee;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
-@Entity
+@Entity(name = "division")
 public class Division {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "division_id")
+    @Column (name = "division_id")
     private Integer divisionId;
 
-    @Column(name = "division_name")
+    @Column (name = "division_name")
     private String divisionName;
 
-    @OneToMany(mappedBy = "division")
-    @JsonBackReference(value = "back_division")
-    private List<Employee> employeeList;
-
-    public Division() {
-    }
-
-    public Division(Integer divisionId, String divisionName, List<Employee> employeeList) {
-        this.divisionId = divisionId;
-        this.divisionName = divisionName;
-        this.employeeList = employeeList;
-    }
+    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL)
+    private Set<Employee> employees;
 
     public Integer getDivisionId() {
         return divisionId;
@@ -45,11 +33,11 @@ public class Division {
         this.divisionName = divisionName;
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
+    public Set<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
+    public void setEmployee(Set<Employee> employees) {
+        this.employees = employees;
     }
 }
