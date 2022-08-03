@@ -49,8 +49,8 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Page<Customer> findAllCustomerByName(Pageable pageable, Customer customer) {
-        return iCustomerRepository.findAllCustomerByName(pageable, customer.getCustomerName());
-
+        return iCustomerRepository.findAllCustomerByName(pageable, "%" + customer.getCustomerName() + "%");
     }
+
 
 }

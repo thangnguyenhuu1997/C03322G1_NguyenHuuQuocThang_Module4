@@ -8,6 +8,10 @@
 </head>
 <body>
 <h3>List Customers</h3>
+<form th:action="@{/customer/search}" th:object="${customer}" method="get" novalidate="novalidate">
+    <input type="text" th:field="*{customerName}">
+    <input type="submit" value="Search">
+</form>
 <p>
     <a th:href="@{/customer/create}">
         Add new customer

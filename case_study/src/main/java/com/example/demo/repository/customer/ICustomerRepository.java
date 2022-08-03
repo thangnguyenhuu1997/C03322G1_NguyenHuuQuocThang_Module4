@@ -33,7 +33,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "update customer set status_delete = 1 where customer_id = :id", nativeQuery = true)
     void delete(@Param("id") Integer id);
 
-    @Query(value = "select * from customer where customer_name = :name", nativeQuery = true,
-            countQuery="select count(*) from product where customer_name = :name")
+    @Query(value = "select * from customer where customer_name like :name or customer_address like :name", nativeQuery = true,
+            countQuery="select count(*) from customer where customer_name = :name or customer_address = :name")
     Page<Customer> findAllCustomerByName(Pageable pageable, @Param("name") String name);
 }

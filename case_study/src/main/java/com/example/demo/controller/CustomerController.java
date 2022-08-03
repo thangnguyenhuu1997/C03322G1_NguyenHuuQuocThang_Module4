@@ -83,4 +83,10 @@ public class CustomerController {
         redirectAttributes.addFlashAttribute("message", "Delete successful");
         return "redirect:/customer";
     }
+    @GetMapping("/search")
+    public String searchCustomer(@RequestParam(name = "page", defaultValue = "0") int page, Customer customer, Model model) {
+        Sort sort = Sort.by("customer_id").ascending();
+        model.addAttribute("customerList", iCustomerService.findAllCustomerByName(PageRequest.of(page, 2, sort), customer));
+        return "/customer/list";
+    }
 }
