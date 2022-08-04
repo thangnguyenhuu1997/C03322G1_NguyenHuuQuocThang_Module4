@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/facility")
@@ -64,11 +63,10 @@ public class FacilityController {
         return "redirect:/facility";
     }
 
-    @GetMapping("/delete")
-    public String delete(Integer serviceId, RedirectAttributes redirectAttributes){
-        Optional<Facility> facility = facilityService.findById(serviceId);
-        facilityService.remove(facility.get());
-        redirectAttributes.addFlashAttribute("msg", "Facility deleted successfully!!");
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, Model model) {
+        model.addAttribute("facility", facilityService.findById(id));
+        facilityService.remove(id);
         return "redirect:/facility";
     }
 }

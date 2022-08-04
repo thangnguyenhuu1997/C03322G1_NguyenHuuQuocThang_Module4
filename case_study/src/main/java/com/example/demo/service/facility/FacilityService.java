@@ -41,7 +41,7 @@ public class FacilityService implements IFacilityService{
     }
 
     @Override
-    public void remove(Facility facility) {
-        facilityRepository.delete(facility);
+    public void remove(Integer id) {
+        facilityRepository.deleteById(id);
     }
 }
