@@ -1,8 +1,11 @@
 package com.example.demo.model.customer;
 
+import com.example.demo.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Customer {
@@ -39,6 +42,10 @@ public class Customer {
     @Column(name = "status_delete")
     @ColumnDefault("0")
     private int statusDelete;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonBackReference
+    private Set<Contract> contract;
 
     public Customer() {
     }
@@ -134,5 +141,17 @@ public class Customer {
 
     public void setStatusDelete(Integer statusDelete) {
         this.statusDelete = statusDelete;
+    }
+
+    public void setStatusDelete(int statusDelete) {
+        this.statusDelete = statusDelete;
+    }
+
+    public Set<Contract> getContract() {
+        return contract;
+    }
+
+    public void setContract(Set<Contract> contract) {
+        this.contract = contract;
     }
 }

@@ -1,6 +1,10 @@
 package com.example.demo.model.employee;
 
+import com.example.demo.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "employee")
 public class Employee {
@@ -46,6 +50,13 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonBackReference
+    private Set<Contract> contract;
+
+    public Employee(String employeeName, String employeeBirthday, String employeeIdCard, Double employeeSalary, String employeePhone, String employeeEmail, String employeeAddress, Position position, EducationDegree educationDegree, Division division, Object o) {
+    }
 
     public Integer getEmployeeId() {
         return employeeId;
@@ -141,5 +152,13 @@ public class Employee {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Contract> getContract() {
+        return contract;
+    }
+
+    public void setContract(Set<Contract> contract) {
+        this.contract = contract;
     }
 }

@@ -7,14 +7,14 @@ import java.util.Set;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "role_id")
+    @Column(name = "role_id")
     private Integer roleId;
 
-//    @Column("role_name")
+    @Column(name = "role_name")
     private String roleName;
 
-//    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-//    private Set<UserRole> roles;
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<UserRole> roles;
 
     public Integer getRoleId() {
         return roleId;
@@ -31,12 +31,12 @@ public class Role {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
-//
-//    public Set<UserRole> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<UserRole> roles) {
-//        this.roles = roles;
-//    }
+
+    public Set<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
+    }
 }

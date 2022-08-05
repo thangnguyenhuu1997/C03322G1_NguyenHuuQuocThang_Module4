@@ -8,10 +8,10 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "username")
+    @Column(name = "username")
     private String username;
 
-    //    @Column(name = "password")
+    @Column(name = "password")
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

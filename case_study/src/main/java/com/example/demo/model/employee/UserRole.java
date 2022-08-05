@@ -6,11 +6,11 @@ import javax.persistence.ManyToOne;
 
 public class UserRole {
     @ManyToOne
-//    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @ManyToOne
-//    @JoinColumn(name = "username")
+    @JoinColumn(name = "username")
     private User user;
 
     public Role getRole() {
