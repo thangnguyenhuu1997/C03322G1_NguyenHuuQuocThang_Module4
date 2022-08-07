@@ -8,7 +8,6 @@
 
 </head>
 <body>
-
 <div class="container-fluid">
     <div sec:authorize="isAuthenticated()">
         <span sec:authentication="principal.username"> | </span>
@@ -69,7 +68,7 @@
                         </a>
                     </td>
                     <td>
-                                <!-- Delete icon modal -->
+                        <!-- Delete icon modal -->
                         <svg data-bs-toggle="modal"
                              th:data-bs-target="'#deleteModal' + ${customer.getId()}"
                              xmlns="http://www.w3.org/2000/svg"
@@ -106,10 +105,10 @@
                             </div>
                         </div>
                     </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <div style="display: flex; color: #0a58ca; justify-content: center">
             <a th:href="@{'/customer'(page=${customerList.number - 1})}" th:if="${customerList.hasPrevious()}">Previous
                 &nbsp;</a>
@@ -126,9 +125,6 @@
             </h2>
         </div>
     </div>
-
-
-</div>
 </div>
 <script th:src="@{/bootstrap_502/js/bootstrap.min.js}"></script>
 </body>

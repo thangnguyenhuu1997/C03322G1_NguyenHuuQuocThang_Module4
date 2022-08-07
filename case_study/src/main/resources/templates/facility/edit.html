@@ -7,7 +7,6 @@
     <link rel="stylesheet" th:href="@{/bootstrap_502/css/bootstrap.min.css}">
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="container-fluid">
         <div sec:authorize="isAuthenticated()">
@@ -141,7 +140,6 @@
     </div>
 </div>
 <hr>
-
 <script>
     window.onload = function() {
         displayBonus(facilityTypeId);
@@ -175,7 +173,6 @@
         }
     }
 </script>
-
 <script th:src=@{"/bootstrap_502/js/bootstrap.min.js"}></script>
 </body>
 </html>
