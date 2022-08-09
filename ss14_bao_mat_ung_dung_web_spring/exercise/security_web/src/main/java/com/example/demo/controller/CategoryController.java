@@ -6,46 +6,53 @@ import com.example.demo.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
-@RestController
+@Controller
 @RequestMapping("/category")
 public class CategoryController {
-
     @Autowired
-    private ICategoryService iCategoryService;
+    ICategoryService iCategoryService;
 
-    @GetMapping("")
-    public ResponseEntity<?> home() {
-        List<Category> categories = iCategoryService.findAllCategory();
-        if (categories.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    @GetMapping
+    public String showCategory(Model model) {
+        List<Category> categoryList = iCategoryService.findAll();
+        model.addAttribute("categoryList", categoryList);
+        return "category";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findByIdCategory(@PathVariable Integer id) {
-        Category category = iCategoryService.findByIdCategory(id);
-        if (category == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(category, HttpStatus.OK);
+    @GetMapping("/create")
+    public String createForm(Model model) {
+        model.addAttribute("category", new Category());
+        return "createCategory";
     }
 
-    @GetMapping("/list-blog/{id}")
-    public ResponseEntity<?> getListBlogInCategory(@PathVariable Integer id) {
-        Category category = iCategoryService.findByIdCategory(id);
-        if (category == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Set<Blog> blogSet = category.getBlogs();
-        return new ResponseEntity<>(blogSet, HttpStatus.OK);
+    @PostMapping("/create")
+    public String create(@ModelAttribute("category") Category category) {
+        iCategoryService.save(category);
+        return "redirect:/category";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable int id, Model model) {
+        model.addAttribute("category", iCategoryService.findById(id));
+        return "updateCategory";
+    }
+
+    @PostMapping("/update")
+    public String update(Category category) {
+        iCategoryService.save(category);
+        return "redirect:/category";
+    }
+
+    @GetMapping("delete")
+    public String delete(@RequestParam int id) {
+        iCategoryService.remove(id);
+        return "redirect:/category";
     }
 }

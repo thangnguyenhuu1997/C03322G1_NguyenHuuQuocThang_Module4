@@ -7,26 +7,36 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
+
     private String username;
+
+    private String password;
+
     private boolean isEnable;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_role",
+    @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> role;
 
     public User() {
     }
 
-    public Long getId() {
+    public User(Integer id, String username, String password, Boolean isEnable, List<Role> role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.isEnable = isEnable;
+        this.role = role;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,6 +48,14 @@ public class User {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public boolean isEnable() {
         return isEnable;
     }
@@ -46,11 +64,11 @@ public class User {
         isEnable = enable;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public List<Role> getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(List<Role> role) {
+        this.role = role;
     }
 }

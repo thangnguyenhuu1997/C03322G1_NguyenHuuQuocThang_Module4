@@ -1,75 +1,49 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
-@Entity(name = "blog")
+@Entity
 public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_blog")
-    private Integer idBlog;
-    @Column(name = "name_blog")
-    private String nameBlog;
-    private String author;
-    private String description;
-    @Column(name = "date_create")
-    private String dateCreate;
+    private Integer id;
+    private String name;
+
     @ManyToOne
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
-    @Column(name = "status_delete")
-    private Integer statusDelete;
+
+    private String content;
+    private String status;
+    private Date dateCreate;
 
     public Blog() {
     }
 
-    public Blog(String nameBlog, String author, String description, String dateCreate, Category category, Integer statusDelete) {
-        this.nameBlog = nameBlog;
-        this.author = author;
-        this.description = description;
-        this.dateCreate = dateCreate;
+    public Blog(Integer id, String name, Category category, String content, String status, Date dateCreate) {
+        this.id = id;
+        this.name = name;
         this.category = category;
-        this.statusDelete = statusDelete;
-    }
-
-    public Integer getIdBlog() {
-        return idBlog;
-    }
-
-    public void setIdBlog(Integer idBlog) {
-        this.idBlog = idBlog;
-    }
-
-    public String getNameBlog() {
-        return nameBlog;
-    }
-
-    public void setNameBlog(String nameBlog) {
-        this.nameBlog = nameBlog;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDateCreate() {
-        return dateCreate;
-    }
-
-    public void setDateCreate(String dateCreate) {
+        this.content = content;
+        this.status = status;
         this.dateCreate = dateCreate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Category getCategory() {
@@ -80,11 +54,27 @@ public class Blog {
         this.category = category;
     }
 
-    public Integer getStatusDelete() {
-        return statusDelete;
+    public String getContent() {
+        return content;
     }
 
-    public void setStatusDelete(Integer statusDelete) {
-        this.statusDelete = statusDelete;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
     }
 }

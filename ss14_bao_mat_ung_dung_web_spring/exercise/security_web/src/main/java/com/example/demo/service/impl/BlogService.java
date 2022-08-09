@@ -8,38 +8,38 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.Optional;
+
 @Service
 public class BlogService implements IBlogService {
     @Autowired
     private IBlogRepository iBlogRepository;
 
     @Override
-    public Page<Blog> findAllBlog(Pageable pageable) {
-        return iBlogRepository.findAllBlog(pageable);
+    public Page<Blog> findAll(Pageable pageable) {
+        return iBlogRepository.findAll(pageable);
+    }
+
+    @Override
+    public Optional<Blog> findById(Integer id) {
+        return iBlogRepository.findById(id);
     }
 
     @Override
     public void save(Blog blog) {
-        iBlogRepository.save(blog.getNameBlog(), blog.getAuthor(), blog.getDescription(), blog.getDateCreate(), blog.getCategory().getIdCategory());
+        blog.setDateCreate(new Date(System.currentTimeMillis()));
+        iBlogRepository.save(blog);
     }
 
     @Override
-    public Blog findByIdBlog(Integer id) {
-        return iBlogRepository.findByIdBlog(id);
+    public void remove(Integer id) {
+        iBlogRepository.deleteById(id);
     }
 
     @Override
-    public void update(Blog blog) {
-        iBlogRepository.update(blog.getNameBlog(), blog.getAuthor(), blog.getDescription(), blog.getDateCreate(), blog.getIdBlog(), blog.getCategory().getIdCategory());
+    public Page<Blog> find(String keyword, Pageable pageable) {
+        return iBlogRepository.findAllByNameContains(keyword, pageable);
     }
 
-    @Override
-    public void delete(Integer id) {
-        iBlogRepository.delete(id);
-    }
-
-    @Override
-    public Page<Blog> findAllBlogByName(Pageable pageable, String txt) {
-        return iBlogRepository.findAllBlogByName(pageable, "%" + txt + "%");
-    }
 }

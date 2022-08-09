@@ -1,75 +1,98 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Blog;
+import com.example.demo.model.Category;
 import com.example.demo.service.IBlogService;
+import com.example.demo.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
-@RequestMapping("/blogs")
+import java.util.List;
+
+@Controller
+@RequestMapping("/blog")
 public class BlogController {
+    @Autowired
+    IBlogService iBlogService;
 
     @Autowired
-    private IBlogService iBlogService;
+    ICategoryService iCategoryService;
 
-    @GetMapping("")
-    public ResponseEntity<?> home(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
-        Sort sort = Sort.by("name_blog").ascending();
-        Page<Blog> blogList = iBlogService.findAllBlog(PageRequest.of(page, 2, sort));
-        if (blogList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(blogList, HttpStatus.OK);
+    @GetMapping
+    public String showBlog(@PageableDefault(value = 5) Pageable pageable, Model model) {
+        List<Category> categoryList = iCategoryService.findAll();
+        Page<Blog> blogList = iBlogService.findAll(pageable);
+
+        model.addAttribute("blogList", blogList);
+        model.addAttribute("categoryList", categoryList);
+        return "blog";
     }
 
-    @GetMapping("/list")
-    public ModelAndView getBlogList(@RequestParam(name = "page", defaultValue = "0") int page) {
-        Sort sort = Sort.by("name_blog").ascending();
-        Page<Blog> blogList = iBlogService.findAllBlog(PageRequest.of(page, 2, sort));
-        ModelAndView modelAndView = new ModelAndView("/list");
-        modelAndView.addObject("blogList", blogList);
-        return modelAndView;
+    @GetMapping("/sort")
+    public String sortBlog(@PageableDefault(value = 5, sort = "dateCreate", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+        List<Category> categoryList = iCategoryService.findAll();
+        Page<Blog> blogList = iBlogService.findAll(pageable);
+
+        model.addAttribute("blogList", blogList);
+        model.addAttribute("categoryList", categoryList);
+        return "blog";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findByIdBlog(@PathVariable Integer id) {
-        Blog blog = iBlogService.findByIdBlog(id);
-        if (blog == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(blog, HttpStatus.OK);
+    @GetMapping("/create")
+    public String createForm(Model model) {
+        model.addAttribute("categoryList", iCategoryService.findAll());
+        model.addAttribute("blog", new Blog());
+        return "create";
     }
 
-    @PostMapping
-    public ResponseEntity<Blog> saveBlog(@RequestBody Blog blog) {
+    @PostMapping("/create")
+    public String create(@ModelAttribute("blog") Blog blog) {
         iBlogService.save(blog);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return "redirect:/blog";
     }
 
-    @GetMapping("/search/{txt}")
-    public ResponseEntity<?> searchByAjax(@PathVariable String txt){
-        Sort sort = Sort.by("name_blog").ascending();
-        Page<Blog> blogList = iBlogService.findAllBlogByName(PageRequest.of(0, 100, sort),txt);
-        if (blogList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(blogList, HttpStatus.OK);
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable int id, Model model) {
+        model.addAttribute("categoryList", iCategoryService.findAll());
+        model.addAttribute("blog", iBlogService.findById(id));
+        return "update";
     }
 
-    @GetMapping("/load/{number}")
-    public ResponseEntity<?> load(@PathVariable Integer number){
-        Sort sort = Sort.by("name_blog").ascending();
-        Page<Blog> blogList = iBlogService.findAllBlog(PageRequest.of(0, number, sort));
-        if (blogList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(blogList, HttpStatus.OK);
+    @PostMapping("/update")
+    public String update(Blog blog) {
+        iBlogService.save(blog);
+        return "redirect:/blog";
+    }
+
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable int id, Model model) {
+        model.addAttribute("blog", iBlogService.findById(id));
+        return "view";
+    }
+
+    @GetMapping("delete")
+    public String delete(@RequestParam int id) {
+        iBlogService.remove(id);
+        return "redirect:";
+    }
+
+    @PostMapping("/search")
+    public String search(@PageableDefault(value = 5) Pageable pageable, @RequestParam("keyword") String keyword, Model model) {
+        Page<Blog> blogList = iBlogService.find(keyword, pageable);
+        List<Category> categoryList = iCategoryService.findAll();
+
+        model.addAttribute("blogList", blogList);
+        model.addAttribute("categoryList", categoryList);
+        return "blog";
     }
 }

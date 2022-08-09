@@ -3,15 +3,14 @@ package com.example.demo.service;
 import com.example.demo.model.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICategoryService {
-    List<Category> findAllCategory();
+    List<Category> findAll();
+
+    Optional<Category> findById(Integer id);
 
     void save(Category category);
 
-    Category findByIdCategory(Integer id);
-
-    void update(Category category);
-
-    void delete(Integer id);
+    void remove(Integer id);
 }

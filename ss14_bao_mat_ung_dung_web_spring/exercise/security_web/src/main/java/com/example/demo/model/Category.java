@@ -5,52 +5,46 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "category")
+@Entity
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_category")
-    private Integer idCategory;
-    @Column(name = "name_category")
-    private String nameCategory;
-    @Column(name = "status_delete")
-    private Integer statusDelete;
+    private Integer id;
+    private String name;
+
     @OneToMany(mappedBy = "category")
-    @JsonBackReference(value = "back-blog")
-    private Set<Blog> blogs;
+    private Set<Blog> blog;
 
     public Category() {
     }
 
-    public Integer getIdCategory() {
-        return idCategory;
+    public Category(Integer id, String name, Set<Blog> blog) {
+        this.id = id;
+        this.name = name;
+        this.blog = blog;
     }
 
-    public void setIdCategory(Integer idCategory) {
-        this.idCategory = idCategory;
+    public Integer getId() {
+        return id;
     }
 
-    public String getNameCategory() {
-        return nameCategory;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setNameCategory(String nameCategory) {
-        this.nameCategory = nameCategory;
+    public String getName() {
+        return name;
     }
 
-    public Integer getStatusDelete() {
-        return statusDelete;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStatusDelete(Integer statusDelete) {
-        this.statusDelete = statusDelete;
+    public Set<Blog> getBlog() {
+        return blog;
     }
 
-    public Set<Blog> getBlogs() {
-        return blogs;
-    }
-
-    public void setBlogs(Set<Blog> blogs) {
-        this.blogs = blogs;
+    public void setBlog(Set<Blog> blog) {
+        this.blog = blog;
     }
 }

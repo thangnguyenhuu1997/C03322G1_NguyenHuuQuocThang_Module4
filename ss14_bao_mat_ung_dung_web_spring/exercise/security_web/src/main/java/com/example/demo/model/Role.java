@@ -7,20 +7,27 @@ import java.util.Set;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
+
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set <User> users;
+    @ManyToMany(mappedBy = "role")
+    private Set<User> user;
 
     public Role() {
     }
 
-    public Long getId() {
+    public Role(Integer id, String name, Set<User> user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -32,11 +39,11 @@ public class Role {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<User> getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(Set<User> user) {
+        this.user = user;
     }
 }
